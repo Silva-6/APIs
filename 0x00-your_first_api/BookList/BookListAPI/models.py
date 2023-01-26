@@ -8,4 +8,6 @@ class Book(models.Model):
     inventory = models.CharField(max_length=255)
 
     class Meta:
-        indexes = [models.Index(fields=['price']),]
+        indexes = [
+            models.Index(fields=['price']),
+        ]

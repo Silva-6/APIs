@@ -8,7 +8,10 @@ from django.forms.models import model_to_dict
 # Create your views here.
 @csrf_exempt
 def books(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
+        books = Book.objects.all().values()
+        return JsonResponse({'books': list(books)})
+    elif request.method == 'POST':
         title = request.POST.get('title')
         author = request.POST.get('author')
         price = request.POST.get('price')
@@ -19,6 +22,3 @@ def books(request):
         except IntegrityError:
             return JsonResponse({'error':'true', 'message':'required field missing'}, status=400)
         return JsonResponse(model_to_dict(books, status=201))
-    books = Book.objects.all().values()
-    return JsonResponse({'books': list(books)})
-    
